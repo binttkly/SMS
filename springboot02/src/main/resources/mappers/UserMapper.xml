@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.qf.Dao.UserDao">
+
+    <select id="login" resultType="org.qf.entity.User">
+        select * from user
+        <where>
+            <if test="name !=null">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+    <select id="showList" resultType="org.qf.entity.User">
+        select * from user
+        <where>
+            <if test="name !=null">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+    <select id="getUserByName" resultType="org.qf.entity.User">
+        select * from user where name =#{name}
+    </select>
+    <insert id="addUser">
+        insert into user(name,sex,birthday,phone,address,password)
+        values(#{name},#{sex},#{birthday},#{phone},#{address},#{password})
+    </insert>
+
+    <delete id="deleteUserById">
+        delete from user where id=#{id}
+    </delete>
+    <update id="updateUser">
+        update user set
+        name=#{name},
+        sex=#{sex},
+        birthday=#{birthday},
+        phone=#{phone},
+        address=#{address}
+        where id=#{id}
+    </update>
+    <!--
+        collection:要遍历的集合或数组    separator:分隔符
+      -->
+    <delete id="deleteBatch">
+        delete from user where id in
+        <foreach collection="idList" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

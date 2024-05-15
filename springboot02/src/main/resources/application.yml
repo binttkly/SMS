@@ -1,0 +1,16 @@
+# 配置端口号
+server:
+  port: 8080
+spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/mydb?characterEncoding=utf-8&serverTimeZone=UTC
+      username: root
+      password: 123456
+
+mybatis:
+  mapper-locations: mappers/*.xml
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
