@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+
+    namespace:对应的是对应接口的全限定名(从包名到类名)
+
+    id:对应接口中的方法的名称
+    select:查询的标签
+    parameterType:传入的参数的类型，如果是基本数据类型可以不写，但是对象其他类型都必须写
+    parameterMap：传入的参数的类型,当数据库表字段与实体类的属性名不一致时使用
+    resultType:返回值类型，如果是基本数据类型可以不写，但是对象其他类型都必须写
+    resultMap:返回值类型，当数据库表字段与实体类的属性名不一致时使用
+
+-->
+<mapper namespace="org.qf.dao.UserDao">
+
+    <select id="login" resultType="org.qf.entity.User1">
+         select * from user1 where name=#{name}
+    </select>
+
+
+    <select id="showList" resultType="org.qf.entity.User1">
+        select * from user1
+        <where>
+            <if test="name !=null">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getUserByName" resultType="org.qf.entity.User1">
+        select * from user1 where name =#{name}
+    </select>
+    <insert id="addUser">
+        insert into user1(id,name,age,birthday,phone,address,password,price)
+        values(#{id},#{name},#{age},#{birthday},#{phone},#{address},#{password},#{price})
+    </insert>
+
+    <delete id="deleteUserById">
+        delete from user1 where id=#{id}
+    </delete>
+    <update id="updateUser">
+        update user1 set
+        name=#{name},
+        age=#{age},
+        birthday=#{birthday},
+        phone=#{phone},
+        address=#{address},
+        price=#{price}
+        where id=#{id}
+    </update>
+    <!--
+        collection:要遍历的集合或数组    separator:分隔符
+      -->
+    <delete id="deleteBatch">
+        delete from user1 where id in
+        <foreach collection="idList" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

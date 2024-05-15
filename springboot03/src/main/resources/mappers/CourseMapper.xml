@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.qf.dao.CourseDao">
+
+    <select id="showList1" resultType="org.qf.entity.Course">
+        select * from course1
+        <where>
+            <if test="name !=null">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getCourseByName" resultType="org.qf.entity.Course">
+        select * from course1 where name =#{name}
+    </select>
+
+    <insert id="addCourse">
+        insert into course1(id,name,profession,room,teacher) values(#{id},#{name},#{profession},#{room},#{teacher})
+    </insert>
+
+    <delete id="deleteCourseById">
+        delete from course1 where id=#{id}
+    </delete>
+
+    <update id="updateCourse">
+        update course1 set
+        name=#{name},
+        profession=#{profession},
+        room=#{room},
+        teacher=#{teacher}
+        where id=#{id}
+    </update>
+    
+</mapper>

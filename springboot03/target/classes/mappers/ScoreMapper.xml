@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.qf.dao.ScoreDao">
+
+    <select id="showList2" resultType="org.qf.entity.Score">
+        select * from score
+        <where>
+            <if test="studentName !=null">
+                and studentName like concat('%',#{studentName},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getScoreByName" resultType="org.qf.entity.Score">
+        select * from score where studentName =#{studentName}
+    </select>
+
+    <insert id="addScore">
+        insert into score(id,studentName,no,name,score,term,year) values(#{id},#{studentName},#{no},#{name},#{score},#{term},#{year})
+    </insert>
+
+    <delete id="deleteScoreById">
+        delete from score where id=#{id}
+    </delete>
+
+    <update id="updateScore">
+        update score set
+        studentName=#{studentName},
+        no=#{no},
+        name=#{name},
+        score=#{score},
+        term=#{term},
+        year=#{year}
+        where id=#{id}
+    </update>
+    
+</mapper>
